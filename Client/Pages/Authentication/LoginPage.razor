@@ -1,0 +1,102 @@
+﻿@page "/login"
+@layout AuthLayout
+@inject Client.Security.AuthStateProvider authProvider
+@using Client.AuthDtos
+@using Client.Security
+@using AntDesign
+
+@inject NavigationManager navManager
+
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<center class="login-page-container mb-1 mt-4">
+ 
+        <EditForm Model="model" OnValidSubmit="@( () => Authenticate())" autocomplete="off">
+            <DataAnnotationsValidator />
+            <Card Title="JetForm Anket Uygulamasi" Class="bg-info"  Style="width:300px;">
+                <Body>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <InputText @bind-Value="model.Email" type="text"
+                                       class="form-control"
+                                       placeholder="Email"
+                                       maxlength="256" />
+                            <div class="input-group-append">
+                                <div class="input-group-text icons-box">
+                                    <span class="material-icons">person</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="validation-message">
+                            <ValidationMessage For="@(()=> model.Email)" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <InputText @bind-Value="model.Password" type="password"
+                                       class="form-control"
+                                       placeholder="password"
+                                       maxlength="32" />
+                            <div class="input-group-append">
+                                <div class="input-group-text icons-box">
+                                    <span class="material-icons">lock</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="validation-message">
+                            <ValidationMessage For="@(()=> model.Password)" />
+                        </div>
+                    </div>
+                    <div class="form-group row login-btn mr-0 ml-0 pr-0 pl-0">
+                        <button type="submit"
+                                class="btn btn-primary btn-block">
+                            Login
+                        </button>
+                    </div>
+                </Body>
+            </Card>
+            <br />
+        </EditForm>
+
+
+
+    @if (Error != null)
+    {
+        <h4>@Error</h4>
+    }
+
+</center>
+
+
+
+@code {
+
+    LoginDto model = new LoginDto();
+    string Error;
+
+    async Task Authenticate()
+    {
+        // api'ye istek at.
+        // basarili ise anasayfaya yonlendir
+
+        try
+        {
+            await authProvider.MarkUserAsAuthenticated(model);
+
+            navManager.NavigateTo("/");
+
+        }
+        catch (ResponseError ex)
+        {
+            Error = ex.Message;
+            this.StateHasChanged();
+        }
+
+    }
+    RenderFragment titleTemplate =@<div><Icon Type="credit-card" Theme="outline" /> Title is Template</div>;
+
+}
+
+

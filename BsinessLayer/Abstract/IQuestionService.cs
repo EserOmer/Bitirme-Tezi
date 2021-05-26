@@ -1,0 +1,19 @@
+﻿using Core.Utilities.Results;
+using Entity.Concrete;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Business.Abstract
+{
+    public interface IQuestionService
+    {
+        IDataResult<List<Question>> GetAll();
+        IDataResult<Question> GetById(int id);
+        IResult Add(Question question);
+        IResult Update(Question question);
+        IDataResult<List<Question>> GetByFormId(int formId);
+    }
+}

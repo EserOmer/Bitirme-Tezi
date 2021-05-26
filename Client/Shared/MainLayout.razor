@@ -1,0 +1,33 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager navManager
+
+<div class="page">
+    <div class="sidebar">
+        <NavMenu />
+    </div>
+
+    <div class="main">
+        @*<div class="top-row px-4">
+                <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
+            </div>*@
+
+        <div class="content px-4">
+            @Body
+        </div>
+    </div>
+</div>
+
+
+@code {
+
+    [CascadingParameter]
+    Task<AuthenticationState> AuthenticationState { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (!(await AuthenticationState).User.Identity.IsAuthenticated)
+        {
+            navManager.NavigateTo("/login");
+        }
+    }
+}
