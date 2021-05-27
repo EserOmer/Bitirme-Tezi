@@ -33,6 +33,7 @@ else
                     <td>@forecast.Summary</td>
                 </tr>
             }
+           
         </tbody>
     </table>
 }
@@ -40,7 +41,7 @@ else
 
 <button @onclick="@( () => authState.MarkUserAsLoggedOut())"> Çıkış yap</button>
 
-<button @onclick="@Logout"> Çıkış yap</button>
+
 
 @code{
 
@@ -51,6 +52,7 @@ else
         test = await http.GetFromJsonAsync<List<WeatherForecast>>("WeatherForecast");
     }
 
+    
     public class WeatherForecast
     {
         public DateTime Date { get; set; }
@@ -62,8 +64,5 @@ else
         public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
     }
 
-    async Task Logout()
-    {
-        authState.MarkUserAsLoggedOut();
-    }
+
 }

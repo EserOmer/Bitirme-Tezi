@@ -3,36 +3,39 @@
 @inject NavigationManager navManager
 @layout AuthLayout
 
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
 
-<EditForm class="form-signin" Model="userForRegister" OnValidSubmit="@Register">
-    <DataAnnotationsValidator />
+<center class="mb-1 mt-4">
 
-    <InputText class="form-control" @bind-Value="userForRegister.Email" placeholder="Bir mail giriniz" />
-    <ValidationMessage For="@( () => userForRegister.Email)" />
+    <EditForm class="login-page-container form-signin" Model="userForRegister" OnValidSubmit="@Register">
+        <DataAnnotationsValidator />
+        <Card Title="Üye Ol" Class="bg-info" Style="width:300px;">
 
-
-    <InputText type="password" class="form-control" placeholder="Şifreniz" @bind-Value="userForRegister.Password" />
-    <ValidationMessage For="@( () => userForRegister.Password)" />
-
-
-    <InputText type="password" class="form-control" placeholder="Şifre Onay" @bind-Value="userForRegister.PasswordConfirm" />
-    <ValidationMessage For="@( () => userForRegister.PasswordConfirm)" />
-
-
-    <InputText class="form-control" placeholder="Adınız" @bind-Value="userForRegister.FirstName" />
-    <ValidationMessage For="@( () => userForRegister.FirstName)" />
-
-
-    <InputText class="form-control" placeholder="Soyadınız" @bind-Value="userForRegister.LastName" />
-    <ValidationMessage For="@( () => userForRegister.LastName)" />
-    <br />
-    @if (string.IsNullOrEmpty(error))
-    {
-        @error
-    }
-    <button class="btn btn-primary" type="submit"> Üye Ol</button>
-</EditForm>
-
+            <Body>
+                <InputText class="form-control" @bind-Value="userForRegister.Email" placeholder="Bir mail giriniz" />
+                <ValidationMessage For="@( () => userForRegister.Email)" />
+                <InputText type="password" class="form-control" placeholder="Şifreniz" @bind-Value="userForRegister.Password" />
+                <ValidationMessage For="@( () => userForRegister.Password)" />
+                <InputText type="password" class="form-control" placeholder="Şifre Onay" @bind-Value="userForRegister.PasswordConfirm" />
+                <ValidationMessage For="@( () => userForRegister.PasswordConfirm)" />
+                <InputText class="form-control" placeholder="Adınız" @bind-Value="userForRegister.FirstName" />
+                <ValidationMessage For="@( () => userForRegister.FirstName)" />
+                <InputText class="form-control" placeholder="Soyadınız" @bind-Value="userForRegister.LastName" />
+                <ValidationMessage For="@( () => userForRegister.LastName)" />
+                <br />
+                @if (string.IsNullOrEmpty(error))
+                {
+                    @error
+                }
+                <div class="form-group row login-btn mr-0 ml-0 pr-0 pl-0">
+                    <button class="btn btn-primary" type="submit"> Üye Ol</button>
+                </div>
+            </Body>
+        </Card>
+    </EditForm>
+</center>
 
 
 
@@ -54,4 +57,5 @@
             error = "Kullanıcı adı veya şifre yanlış";
         }
     }
+    RenderFragment titleTemplate =@<div><Icon Type="credit-card" Theme="outline" /> Title is Template</div>;
 }
