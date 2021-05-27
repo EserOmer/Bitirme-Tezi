@@ -54,6 +54,12 @@
                                 class="btn btn-primary btn-block">
                             Login
                         </button>
+                    </div> 
+                    <div class="form-group row login-btn mr-0 ml-0 pr-0 pl-0">
+                        <button @onclick="@Register" type="button"
+                                class="btn btn-primary btn-block">
+                           Register
+                        </button>
                     </div>
                 </Body>
             </Card>
@@ -94,6 +100,11 @@
             this.StateHasChanged();
         }
 
+    }
+
+    async Task Register()
+    {
+        navManager.NavigateTo("register");
     }
     RenderFragment titleTemplate =@<div><Icon Type="credit-card" Theme="outline" /> Title is Template</div>;
 

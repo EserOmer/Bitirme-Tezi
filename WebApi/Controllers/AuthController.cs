@@ -37,23 +37,26 @@ namespace WebAPI.Controllers
             return await Response<LoginResultDto>.Catch(new ResponseError() { Message = "Bad Request" });
         }
 
-       // [HttpPost("register")]
+        [HttpPost("register")]
 
-        //public async Task<Response<UserForRegisterDto>> Register(UserForRegisterDto userForRegisterDto)
-        //{
-        //    var userExists = _authService.UserExists(userForRegisterDto.Email);
-        //    if (!userExists.Success)
-        //    {
-        //        return await Response<UserForRegisterDto>.Catch(new ResponseError() { Message = "Sifre Yanlis" });
-        //    }
-        //    var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
-        //    var result = _authService.CreateAccessToken(registerResult.Data);
-        //    if (result.Success)
-        //    {
-        //        return await Response<UserForRegisterDto>.Run(new LoginResultDto() { AccessToken=result.Data. });
-        //    }
-        //    return await Response<UserForRegisterDto>.Catch(new ResponseError() { Message = "Bad Request" });
-        //}
+        public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
+        {
+            var userExists = _authService.UserExists(userForRegisterDto.Email);
+            if (!userExists.Success)
+            {
+                return BadRequest("Kullanici Mevcut");
+            }
+           
+            try
+            {
+                var registerResult = _authService.Register(userForRegisterDto, userForRegisterDto.Password);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
         //public ActionResult Register(UserForRegisterDto userForRegisterDto)
         //{

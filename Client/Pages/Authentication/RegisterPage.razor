@@ -1,0 +1,57 @@
+﻿@page "/register"
+@inject IAuthService authService
+@inject NavigationManager navManager
+@layout AuthLayout
+
+
+<EditForm class="form-signin" Model="userForRegister" OnValidSubmit="@Register">
+    <DataAnnotationsValidator />
+
+    <InputText class="form-control" @bind-Value="userForRegister.Email" placeholder="Bir mail giriniz" />
+    <ValidationMessage For="@( () => userForRegister.Email)" />
+
+
+    <InputText type="password" class="form-control" placeholder="Şifreniz" @bind-Value="userForRegister.Password" />
+    <ValidationMessage For="@( () => userForRegister.Password)" />
+
+
+    <InputText type="password" class="form-control" placeholder="Şifre Onay" @bind-Value="userForRegister.PasswordConfirm" />
+    <ValidationMessage For="@( () => userForRegister.PasswordConfirm)" />
+
+
+    <InputText class="form-control" placeholder="Adınız" @bind-Value="userForRegister.FirstName" />
+    <ValidationMessage For="@( () => userForRegister.FirstName)" />
+
+
+    <InputText class="form-control" placeholder="Soyadınız" @bind-Value="userForRegister.LastName" />
+    <ValidationMessage For="@( () => userForRegister.LastName)" />
+    <br />
+    @if (string.IsNullOrEmpty(error))
+    {
+        @error
+    }
+    <button class="btn btn-primary" type="submit"> Üye Ol</button>
+</EditForm>
+
+
+
+
+@code {
+
+    RegisterDto userForRegister = new RegisterDto();
+    string error;
+
+    async Task Register()
+    {
+        try
+        {
+            await authService.Register(userForRegister);
+            navManager.NavigateTo("login");
+
+        }
+        catch (Exception)
+        {
+            error = "Kullanıcı adı veya şifre yanlış";
+        }
+    }
+}
